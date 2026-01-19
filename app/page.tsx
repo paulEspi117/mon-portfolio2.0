@@ -1,65 +1,95 @@
+'use client';
+
+import { motion } from "framer-motion";
 import Image from "next/image";
+import rocket from '../public/rocket.svg'; // Assure-toi que le chemin est bon selon ton dossier
+import DarkVeil from "../components/DarkVeil";
 
 export default function Home() {
+  // --- CONFIGURATION DES ANIMATIONS ---
+  
+  // Le chef d'orchestre (le conteneur)
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.3 } // Délai entre chaque ligne
+    },
+  };
+
+  // Les musiciens (les lignes de texte)
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 50 } }
+  };
+
+  // La fusée (l'image)
+  const imageVariants = {
+    hidden: { x: 50, opacity: 0 },
+    visible: { 
+      x: 0, 
+      opacity: 1, 
+      transition: { duration: 0.8, delay: 0.5 }
+    }
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <main className="relative min-h-screen w-full bg-slate-950 text-white flex items-center justify-center p-8 overflow-hidden">
+      
+      {/* --- COUCHE 1 : ARRIÈRE-PLAN (DarkVeil) --- */}
+      <div className="absolute inset-0 z-0 w-full h-full">
+        <DarkVeil
+          hueShift={0}
+          noiseIntensity={0}      // <--- MODIFICATION ICI : 0 = Pas de neige
+          scanlineIntensity={0.2} // Garde un léger effet "écran" (tu peux mettre 0 aussi si tu veux un fond pur)
+          speed={0.5}
+          scanlineFrequency={0}
+          warpAmount={0}
+          className="w-full h-full"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      </div>
+
+      {/* --- COUCHE 2 : CONTENU PRINCIPAL --- */}
+      <div className="relative z-10 flex flex-col md:flex-row items-center gap-12 max-w-6xl w-full">
+        
+        {/* BLOC GAUCHE : TEXTE */}
+        <motion.div 
+          className="flex-1"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.span variants={itemVariants} className="font-bold text-xl block  text-gray-400">
+            Bonjour, je suis
+          </motion.span> 
+          
+          <motion.span 
+            variants={itemVariants} 
+            className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-blue-200 to-blue-900 bg-clip-text text-transparent block py-2"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+            Paul ESPINASSE
+          </motion.span> 
+          
+          <motion.span variants={itemVariants} className="text-3xl md:text-5xl font-bold block text-gray-200 mb-6">
+            Développeur junior
+          </motion.span> 
+          
+          <motion.span variants={itemVariants} className="font-bold text-lg text-gray-500 block">
+            et prêt à collaborer avec vous !
+          </motion.span>
+        </motion.div>
+
+        {/* BLOC DROITE : IMAGE */}
+        <motion.div 
+          className="flex-shrink-0"
+          variants={imageVariants}
+          initial="hidden"
+          animate="visible"
+        >
+            
+        </motion.div>
+
+      </div>
+    </main>
   );
 }
