@@ -1,47 +1,41 @@
 'use client';
 
 import { motion } from "framer-motion";
-import Image from "next/image";
-import rocket from '../public/rocket.svg'; // Assure-toi que le chemin est bon selon ton dossier
 import DarkVeil from "../components/DarkVeil";
+import Navbar from "@/components/navbar";
+import React from "react";
+import About from "@/components/about";
 
 export default function Home() {
   // --- CONFIGURATION DES ANIMATIONS ---
-  
-  // Le chef d'orchestre (le conteneur)
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.3 } // Délai entre chaque ligne
+      transition: { staggerChildren: 0.3 }
     },
   };
 
-  // Les musiciens (les lignes de texte)
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
     visible: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 50 } }
   };
 
-  // La fusée (l'image)
-  const imageVariants = {
-    hidden: { x: 50, opacity: 0 },
-    visible: { 
-      x: 0, 
-      opacity: 1, 
-      transition: { duration: 0.8, delay: 0.5 }
-    }
-  };
-
   return (
-    <main className="relative min-h-screen w-full bg-slate-950 text-white flex items-center justify-center p-8 overflow-hidden">
+    // J'ai retiré 'overflow-hidden' pour permettre le scroll
+    <main className="relative min-h-screen bg-slate-950 text-white selection:bg-blue-500/30">
       
-      {/* --- COUCHE 1 : ARRIÈRE-PLAN (DarkVeil) --- */}
-      <div className="absolute inset-0 z-0 w-full h-full">
+      {/* 1. NAVBAR (Fixe en haut) */}
+      <div className="fixed top-0 left-0 w-full z-50">
+        <Navbar />
+      </div>
+
+      {/* 2. ARRIÈRE-PLAN (Fixe, ne bouge pas au scroll) */}
+      <div className="fixed inset-0 z-0">
         <DarkVeil
           hueShift={0}
-          noiseIntensity={0}      // <--- MODIFICATION ICI : 0 = Pas de neige
-          scanlineIntensity={0.2} // Garde un léger effet "écran" (tu peux mettre 0 aussi si tu veux un fond pur)
+          noiseIntensity={0}
+          scanlineIntensity={0.2}
           speed={0.5}
           scanlineFrequency={0}
           warpAmount={0}
@@ -49,47 +43,48 @@ export default function Home() {
         />
       </div>
 
-      {/* --- COUCHE 2 : CONTENU PRINCIPAL --- */}
-      <div className="relative z-10 flex flex-col md:flex-row items-center gap-12 max-w-6xl w-full">
+      {/* 3. CONTENU DÉFILANT */}
+      <div className="relative z-10 flex flex-col w-full">
         
-        {/* BLOC GAUCHE : TEXTE */}
-        <motion.div 
-          className="flex-1"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <motion.span variants={itemVariants} className="font-bold text-xl block  text-gray-400">
-            Bonjour, je suis
-          </motion.span> 
-          
-          <motion.span 
-            variants={itemVariants} 
-            className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-blue-200 to-blue-900 bg-clip-text text-transparent block py-2"
-          >
-            Paul ESPINASSE
-          </motion.span> 
-          
-          <motion.span variants={itemVariants} className="text-3xl md:text-5xl font-bold block text-gray-200 mb-6">
-            Développeur junior
-          </motion.span> 
-          
-          <motion.span variants={itemVariants} className="font-bold text-lg text-gray-500 block">
-            et prêt à collaborer avec vous !
-          </motion.span>
-        </motion.div>
-
-        {/* BLOC DROITE : IMAGE */}
-        <motion.div 
-          className="flex-shrink-0"
-          variants={imageVariants}
-          initial="hidden"
-          animate="visible"
-        >
+        {/* SECTION 1 : HERO (Prend tout l'écran : min-h-screen) */}
+        <section className="min-h-screen flex items-center justify-center p-8">
+          <div className="flex flex-col md:flex-row items-center gap-12 max-w-6xl w-full pt-20"> {/* Ajout pt-20 pour ne pas être caché par la navbar */}
             
-        </motion.div>
+            <motion.div 
+              className="flex-1"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <motion.span variants={itemVariants} className="font-bold font-mono text-xl block text-gray-400">
+                Bonjour, je suis
+              </motion.span> 
+              
+              <motion.span 
+                variants={itemVariants} 
+                className="text-6xl md:text-8xl font-extrabold font-bold bg-gradient-to-r from-blue-200 to-blue-900 bg-clip-text text-transparent block py-2"
+              >
+                PAUL ESPINASSE
+              </motion.span> 
+              
+              <motion.span variants={itemVariants} className="text-3xl md:text-5xl font-mono font-bold block text-gray-200 mb-6">
+                Développeur junior
+              </motion.span> 
+              
+              <motion.span variants={itemVariants} className="font-bold text-lg font-mono text-gray-500 block">
+                et prêt à collaborer avec vous !
+              </motion.span>
+            </motion.div>
+
+          </div>    
+        </section>
+
+        {/* SECTION 2 : ABOUT (En dessous) */}
+        <section id="about" className="w-full">
+           <About />
+        </section>
 
       </div>
-    </main>
+    </main>   
   );
 }
