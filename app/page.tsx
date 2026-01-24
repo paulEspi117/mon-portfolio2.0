@@ -47,7 +47,7 @@ export default function Home() {
       <div className="relative z-10 flex flex-col w-full">
         
         {/* SECTION 1 : HERO (Prend tout l'écran : min-h-screen) */}
-        <section className="min-h-screen flex items-center justify-center p-8">
+        <section id="home" className="min-h-screen flex items-center justify-center p-8">
           <div className="flex flex-col md:flex-row items-center gap-12 max-w-6xl w-full pt-20"> {/* Ajout pt-20 pour ne pas être caché par la navbar */}
             
             <motion.div 
