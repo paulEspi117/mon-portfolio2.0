@@ -9,8 +9,8 @@ export default function Navbar() {
                     <a href="#about" onClick={(e) => { e.preventDefault(); document.getElementById("about")?.scrollIntoView({ behavior: "smooth" }); }} className="text-white hover:text-blue-400">À propos</a>
                 </li>
                 <li>
-                    <a href="#projects" className="text-white hover:text-blue-400">Projets</a>
-                </li>
+                    <a href="#projects" onClick={(e) => { e.preventDefault(); document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" }); }}className="text-white hover:text-blue-400">Projets</a>
+                </li> 
                 <li>
                     <a href="#contact" className="text-white hover:text-blue-400">Contact</a>
                 </li>

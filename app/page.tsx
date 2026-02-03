@@ -5,6 +5,7 @@ import DarkVeil from "../components/DarkVeil";
 import Navbar from "@/components/navbar";
 import React from "react";
 import About from "@/components/about";
+import Projects from "@/components/projects";
 
 export default function Home() {
   // --- CONFIGURATION DES ANIMATIONS ---
@@ -82,6 +83,12 @@ export default function Home() {
         {/* SECTION 2 : ABOUT (En dessous) */}
         <section id="about" className="w-full">
            <About />
+        </section>
+
+        {/* SECTION 3 : PROJECTS (En dessous) */}
+        <section id="projects" className="w-full">
+           {/* Lazy load Projects component */}
+           <Projects />
         </section>
 
       </div>
