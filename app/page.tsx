@@ -6,6 +6,7 @@ import Navbar from "@/components/navbar";
 import React from "react";
 import About from "@/components/about";
 import Projects from "@/components/projects";
+import Contact from "@/components/contact";
 
 export default function Home() {
   // --- CONFIGURATION DES ANIMATIONS ---
@@ -89,6 +90,10 @@ export default function Home() {
         <section id="projects" className="w-full">
            {/* Lazy load Projects component */}
            <Projects />
+        </section>
+
+        <section>
+          <Contact />
         </section>
 
       </div>

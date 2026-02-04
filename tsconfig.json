@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-, "components/DarkVeil.js"  ],
+, "components/DarkVeil.js", "components/SpotlightCard.js"  ],
   "exclude": ["node_modules"]
 }
