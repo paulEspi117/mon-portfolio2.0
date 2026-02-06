@@ -8,10 +8,10 @@ const items = [
 
 export default function Navbar() {
     return (
-        <div style={{ height: '600px', position: 'relative' }} className='flex space-x-6 justify-center p-4'>
+        <div className='flex items-center space-x-6 justify-center p-4 h-16'>
             <GooeyNav
                 items={items}
-                particleCount={9}
+                particleCount={6}
                 particleDistances={[90, 10]}
                 particleR={200}
                 initialActiveIndex={0}

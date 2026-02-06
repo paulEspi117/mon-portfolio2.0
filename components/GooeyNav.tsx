@@ -32,6 +32,21 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
   const textRef = useRef<HTMLSpanElement>(null);
   const [activeIndex, setActiveIndex] = useState<number>(initialActiveIndex);
 
+  // palette utilisée pour les particules (couleur de fond)
+  const colorMap: Record<number, string> = {
+    1: '#ffffff',
+    2: '#e9d5ff',
+    3: '#fce7f3',
+    4: '#c4b5fd'
+  };
+  // couleur de bordure / halo légèrement violette
+  const borderMap: Record<number, string> = {
+    1: 'rgba(124,58,237,0.35)',
+    2: 'rgba(124,58,237,0.28)',
+    3: 'rgba(168,85,247,0.25)',
+    4: 'rgba(124,58,237,0.32)'
+  };
+
   const noise = (n = 1) => n / 2 - Math.random() * n;
   const getXY = (distance: number, pointIndex: number, totalPoints: number): [number, number] => {
     const angle = ((360 + noise(8)) / totalPoints) * pointIndex * (Math.PI / 180);
@@ -67,7 +82,9 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
         particle.style.setProperty('--end-y', `${p.end[1]}px`);
         particle.style.setProperty('--time', `${p.time}ms`);
         particle.style.setProperty('--scale', `${p.scale}`);
-        particle.style.setProperty('--color', `var(--color-${p.color}, white)`);
+        // appliquer couleur et bordure depuis la palette locale pour garantir le rendu
+        particle.style.setProperty('--color', colorMap[p.color] ?? 'white');
+        particle.style.setProperty('--border', borderMap[p.color] ?? 'rgba(124,58,237,0.32)');
         particle.style.setProperty('--rotate', `${p.rotate}deg`);
         point.classList.add('point');
         particle.appendChild(point);
@@ -170,7 +187,7 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
             color: black;
           }
           .effect.filter {
-            filter: blur(7px) contrast(100) blur(0);
+            filter: blur(2px) contrast(100) blur(0);
             mix-blend-mode: lighten;
           }
           .effect.filter::before {
@@ -178,7 +195,7 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
             position: absolute;
             inset: -75px;
             z-index: -2;
-            background: black;
+            background: transparent;
           }
           .effect.filter::after {
             content: "";
